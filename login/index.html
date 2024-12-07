@@ -14,7 +14,13 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            min-height: 100vh;
+        }
+        .header-logo {
+            position: absolute;
+            top: 20px;
+            width: 200px;
+            height: auto;
         }
         .login-container {
             text-align: center;
@@ -23,6 +29,7 @@
             border-radius: 8px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
             width: 300px;
+            margin-top: 150px;
         }
         .logo {
             width: 100px;
@@ -62,14 +69,15 @@
     </style>
 </head>
 <body>
+    <img src="./wnc.png" alt="WNC Banner" class="header-logo">
     <div class="login-container">
-        <img src="./wnclogo.png" alt="WNC Logo" class="logo">
-        <h1>歡迎來到 WNC 的服務</h1>
-        <p>此服務需要登入才能使用</p>
+        <img src="./login/wnclogo.png" alt="WNC Logo" class="logo">
+        <h1>Welcome to WNC Service</h1>
+        <p>This service requires login to access.</p>
         <form action="/login" method="POST">
-            <input type="text" name="username" placeholder="帳號" required>
-            <input type="password" name="password" placeholder="密碼" required>
-            <button type="submit">登入</button>
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Login</button>
         </form>
     </div>
 </body>
