@@ -28,8 +28,18 @@
         const site = urlParams.get('site');
 
         if (site) {
-            const domain = new URL(site).hostname;
-            document.write(`<p>Check details at <a href="https://www.virustotal.com/gui/domain/${domain}" target="_blank">https://www.virustotal.com/gui/domain/${domain}</a></p>`);
+            try {
+                const parsedUrl = new URL(site);
+                const domainOrIp = parsedUrl.hostname;
+                const isIp = /^(\d{1,3}\.){3}\d{1,3}$/.test(domainOrIp);
+                const virustotalUrl = isIp 
+                    ? `https://www.virustotal.com/gui/ip-address/${domainOrIp}` 
+                    : `https://www.virustotal.com/gui/domain/${domainOrIp}`;
+
+                document.write(`<p>Check details at <a href="${virustotalUrl}" target="_blank">${virustotalUrl}</a></p>`);
+            } catch (error) {
+                document.write("<p>Error: Invalid site parameter provided!</p>");
+            }
         } else {
             document.write("<p>Error: No site parameter provided!</p>");
         }
