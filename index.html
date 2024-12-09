@@ -3,9 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Dangerous Website</title>
+    <style>
+        body {
+            background-color: red;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        a {
+            color: yellow;
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello World</h1>
+    <h1>This is a Dangerous Website</h1>
+    <p>You are about to connect to a potentially harmful website. Proceed with caution!</p>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const site = urlParams.get('site');
+
+        if (site) {
+            document.write(`<p>Click <a href="${site}" target="_blank">here</a> to visit the website: ${site}</p>`);
+        } else {
+            document.write("<p>Error: No site parameter provided!</p>");
+        }
+    </script>
 </body>
 </html>
