@@ -28,7 +28,8 @@
         const site = urlParams.get('site');
 
         if (site) {
-            document.write(`<p>Click <a href="${site}" target="_blank">here</a> to visit the website: ${site}</p>`);
+            const domain = new URL(site).hostname;
+            document.write(`<p>Check details at <a href="https://www.virustotal.com/gui/domain/${domain}" target="_blank">https://www.virustotal.com/gui/domain/${domain}</a></p>`);
         } else {
             document.write("<p>Error: No site parameter provided!</p>");
         }
