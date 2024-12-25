@@ -21,22 +21,49 @@
 <body>
     <h1>WNC Security Team</h1>
     <p>We detected that you attempted to connect to a malicious website, and we have immediately blocked it for your safety.</p>
-    <h2>This is a Dangerous Website</h2>
-    <p>You are about to connect to a potentially harmful website. Proceed with caution!</p>
+    
+    <!-- 在這裡顯示使用者即將前往的網址 -->
+    <h2>You are about to connect to <span id="site-url"></span></h2>
+    <p>Please proceed with caution!</p>
+
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const site = urlParams.get('site');
 
+        // 取得顯示網址的元素
+        const siteUrlElement = document.getElementById('site-url');
+
         if (site) {
+            // 顯示使用者輸入的 site
+            siteUrlElement.textContent = site;
+
             try {
+                // 嘗試解析 URL，以取得 Domain 或 IP
                 const parsedUrl = new URL(site);
                 const domainOrIp = parsedUrl.hostname;
-                const isIp = /^(\d{1,3}\.){3}\d{1,3}$/.test(domainOrIp);
-                const virustotalUrl = isIp 
-                    ? `https://www.virustotal.com/gui/ip-address/${domainOrIp}` 
-                    : `https://www.virustotal.com/gui/domain/${domainOrIp}`;
 
-                document.write(`<p>Check details at <a href="${virustotalUrl}" target="_blank">here</a></p>`);
+                // 判斷是否為 IP
+                const isIp = /^(\d{1,3}\.){3}\d{1,3}$/.test(domainOrIp);
+
+                // 根據結果產生對應的 VirusTotal 連結
+                const virustotalUrl = isIp 
+                    ? `https://www.virustotal.com/gui/ip-address/${domainOrIp}/relations`
+                    : `https://www.virustotal.com/gui/domain/${domainOrIp}/relations`;
+
+                // 將「Check details at ...」改成想要的文字
+                // 中文： 資安權威網站VirusTotal 可以讓你了解此網站的安全性
+                // 英文（可同時放）： The authoritative security website VirusTotal can help you learn about the safety of this site.
+                document.write(`
+                    <p>
+                        The authoritative security website VirusTotal can help you learn about the safety of this site.<br>
+                        <em>(The authoritative security website VirusTotal can help you learn about the safety of this site.)</em>
+                    </p>
+                    <p>
+                        <a href="${virustotalUrl}" target="_blank">
+                            [Go to VirusTotal for more detail.]
+                        </a>
+                    </p>
+                `);
             } catch (error) {
                 document.write("<p>Error: Invalid site parameter provided!</p>");
             }
